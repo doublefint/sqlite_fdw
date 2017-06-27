@@ -1470,22 +1470,23 @@ sqliteTranslateType(StringInfo str, char *typname)
 	else if (strcmp(type, "datetime") == 0)
 		appendStringInfoString(str, "timestamp");
 
-	else if (strcmp(type, "nvarchar text") == 0)
+	/* for case: 'fieldname nvarchar(255)' */
+	else if (strcmp(type, "nvarchar", 8) == 0)
+		appendStringInfoString(str, "text");
+	
+	else if (strcmp(type, "longvarchar") == 0)
 		appendStringInfoString(str, "text");
 
-	else if (strcmp(type, "longvarchar") == 0)
-	     appendStringInfoString(str, "text");
-
 	else if (strncmp(type, "text", 4) == 0)
-	     appendStringInfoString(str, "text");
+		appendStringInfoString(str, "text");
 
 	else if (strcmp(type, "blob") == 0)
-	     appendStringInfoString(str, "bytea");
+		appendStringInfoString(str, "bytea");
 
 	else if (strcmp(type, "integer") == 0)
-	     /* Type "integer" appears dynamically sized between 1 and 8
-	      * bytes.  Need to assume worst case. */
-	     appendStringInfoString(str, "bigint");
+		/* Type "integer" appears dynamically sized between 1 and 8
+		* bytes.  Need to assume worst case. */
+		appendStringInfoString(str, "bigint");
 
 	/* XXX try harder handling sqlite datatype */
 
