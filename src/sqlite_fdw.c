@@ -1470,7 +1470,7 @@ sqliteTranslateType(StringInfo str, char *typname)
 	else if (strcmp(type, "datetime") == 0)
 		appendStringInfoString(str, "timestamp");
 
-	/* for case: 'fieldname nvarchar(255)' */
+	// for case: 'fieldname nvarchar(255)' 
 	else if (strncmp(type, "nvarchar", 8) == 0)
 		appendStringInfoString(str, "text");
 	
@@ -1478,6 +1478,10 @@ sqliteTranslateType(StringInfo str, char *typname)
 		appendStringInfoString(str, "text");
 
 	else if (strncmp(type, "text", 4) == 0)
+		appendStringInfoString(str, "text");
+	
+	// for case: 'fieldname ntext'
+	else if (strcmp(type, "ntext") == 0)
 		appendStringInfoString(str, "text");
 
 	else if (strcmp(type, "blob") == 0)
