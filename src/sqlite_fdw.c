@@ -1471,7 +1471,7 @@ sqliteTranslateType(StringInfo str, char *typname)
 		appendStringInfoString(str, "timestamp");
 
 	/* for case: 'fieldname nvarchar(255)' */
-	else if (strcmp(type, "nvarchar", 8) == 0)
+	else if (strncmp(type, "nvarchar", 8) == 0)
 		appendStringInfoString(str, "text");
 	
 	else if (strcmp(type, "longvarchar") == 0)
