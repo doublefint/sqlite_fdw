@@ -1477,6 +1477,9 @@ sqliteTranslateType(StringInfo str, char *typname)
 	else if (strcmp(type, "longvarchar") == 0)
 		appendStringInfoString(str, "text");
 
+	else if ( strcmp( type, "memo" ) == 0 )
+		appendStringInfoString( str, "text" );
+
 	else if (strncmp(type, "text", 4) == 0)
 		appendStringInfoString(str, "text");
 	
@@ -1493,6 +1496,11 @@ sqliteTranslateType(StringInfo str, char *typname)
 		appendStringInfoString(str, "bigint");
 
 	/* XXX try harder handling sqlite datatype */
+
+	// special case - mistyping
+
+	else if ( strcmp( type, "nit") == 0 )
+		appendStringInfoString( str, "bigint" );
 
 	/* if original type is compatible, return lowercase value */
 	else
